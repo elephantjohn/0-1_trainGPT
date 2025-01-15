@@ -28,7 +28,7 @@ torchrun --nproc_per_node 2 1-pretrain.py
 
 <img width="758" alt="截屏2025-01-15 21 04 29" src="https://github.com/user-attachments/assets/44f59c4a-ee48-4903-9727-78c225b05fa1" />
 
-预训练时资源占用：
+预训练资源占用：
 
 <img width="755" alt="截屏2025-01-15 21 06 22" src="https://github.com/user-attachments/assets/3ba51cd1-6430-45e1-ad4a-6eae02ddb629" />
 
