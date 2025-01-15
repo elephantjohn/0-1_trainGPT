@@ -1,6 +1,7 @@
 # 0-1_trainGPT
 ### 0. 下载minimind仓库
 将https://github.com/elephantjohn/minimind 下载到 /root/work/目录下；
+
 下载后，/root/work/minimind目录下为minimind项目代码
 
 ### 1.下载数据集
@@ -24,6 +25,7 @@ cd /root/work/minimind/dataset
 torchrun --nproc_per_node 2 1-pretrain.py
 ```
 训练过程：
+
 <img width="758" alt="截屏2025-01-15 21 04 29" src="https://github.com/user-attachments/assets/44f59c4a-ee48-4903-9727-78c225b05fa1" />
 
 
