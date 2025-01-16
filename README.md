@@ -70,6 +70,20 @@ tokenizer.save("./model/minimind_tokenizer/tokenizer.json")
 “and”	3
 “AI”	4
 ---
+嵌入层的初始化：
+
+import torch
+import torch.nn as nn
+
+# 初始化嵌入层，词汇表大小为 5，嵌入向量维度为 3
+embedding_layer = nn.Embedding(num_embeddings=5, embedding_dim=3)
+
+---
+假设我们有两个句子：
+
+句子 1: "I love AI" -> 索引序列 [0, 1, 4]
+句子 2: "you and AI" -> 索引序列 [2, 3, 4]
+我们将这两个句子组成一个批次（batch），输入张量的形状为 (batch_size, sequence_length)，即：
 
 input_indices = torch.tensor([
     [0, 1, 4],  # 句子 1 的索引序列
@@ -77,11 +91,18 @@ input_indices = torch.tensor([
 ])  # 形状: (batch_size=2, sequence_length=3)
 
 --
+将输入张量传入嵌入层：
 
 output_embeddings = embedding_layer(input_indices)
 print(output_embeddings.shape)  # 输出形状: (2, 3, 3)
 
 --
+
+输出的形状为 (batch_size, sequence_length, embedding_dim)，即：
+
+batch_size=2：表示有 2 个句子。
+sequence_length=3：每个句子有 3 个单词。
+embedding_dim=3：每个单词的嵌入向量是 3 维的。
 
 对于句子 1 [0, 1, 4]：
 索引 0 对应嵌入向量 [0.1, 0.2, 0.3]（“I” 的嵌入向量）。
