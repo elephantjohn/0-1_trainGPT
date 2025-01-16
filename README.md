@@ -202,6 +202,7 @@ torch.nn.ModuleList是一个特殊的容器，用于存储一系列的子模块�
 
 TransformerBlock类是一个神经网络模块，通常用于实现Transformer模型中的一个层。这个类继承自nn.Module，这是PyTorch中所有神经网络模块的基类。
 ```python
+class TransformerBlock(nn.Module):
     def __init__(self, layer_id: int, args: LMConfig):
         super().__init__()
         self.n_heads = args.n_heads
