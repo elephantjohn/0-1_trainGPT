@@ -59,7 +59,7 @@ tokenizer.save("./model/minimind_tokenizer/tokenizer.json")
 
 
 3. 关于自定义的Transformer类
-   
+   - embedding
 其中一个变量是self.tok_embeddings = nn.Embedding(params.vocab_size, params.dim)，原理是把所有的输入文字句子按照词表找到索引，即转化为了一个代表句子的向量，再将此向量经过embegging变为例如n*m*3的矩阵，这样，每一个单词都是一个m*3的矩阵，n是总句子数，m是每个句子里的单词数，3是embedding向量的维度；举例：
 ```python
 词汇表是：
@@ -165,5 +165,26 @@ tensor([[ 0.1234, -0.5678,  0.9101],
 如果你没有手动修改嵌入矩阵的值，那么它会一直保持默认的随机初始化值，直到训练过程中被更新（通过反向传播）。
 
 嵌入矩阵是一个可训练的参数（requires_grad=True），在训练过程中会通过反向传播自动更新。每次梯度更新时，嵌入矩阵的值都会被调整，以更好地表示输入数据的语义关系。
+
+- dropout
+  nn.Dropout是PyTorch中的一个层，用于在训练过程中随机将一部分神经元的输出设为零，以防止过拟合;
+  params.dropout是一个参数，指定了在训练过程中每个神经元被“丢弃”的概率。这个值通常在0到1之间。
+
+```python
+  self.dropout = nn.Dropout(params.dropout)
+```
+- layers
+torch.nn.ModuleList是一个特殊的容器，用于存储一系列的子模块（例如，神经网络层）。
+
+使用ModuleList可以方便地管理和迭代多个层或模块，特别是在需要动态添加或修改网络结构时。
+
+  ```python
+  self.layers = torch.nn.ModuleList():
+  ```
+
+```python
+```
+这两行代码是在定义一个神经网络的部分结构，其中包括一个Dropout层和一个用于存储其他层的列表。
+
 
 
