@@ -177,14 +177,14 @@ tensor([[ 0.1234, -0.5678,  0.9101],
 ```
 
 - layers
+  ```python
+  self.layers = torch.nn.ModuleList():
+  ```
 
 torch.nn.ModuleList是一个特殊的容器，用于存储一系列的子模块（例如，神经网络层）。
 
 使用ModuleList可以方便地管理和迭代多个层或模块，特别是在需要动态添加或修改网络结构时。
 
-  ```python
-  self.layers = torch.nn.ModuleList():
-  ```
 
 ```python
   self.dropout = nn.Dropout(params.dropout)
