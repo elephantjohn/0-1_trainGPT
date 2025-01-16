@@ -190,7 +190,14 @@ torch.nn.ModuleList是一个特殊的容器，用于存储一系列的子模块�
   self.dropout = nn.Dropout(params.dropout)
   self.layers = torch.nn.ModuleList()
 ```
-这两行代码是在定义一个神经网络的部分结构，其中包括一个Dropout层和一个用于存储其他层的列表。
+以上这两行代码是在定义一个神经网络的部分结构，其中包括一个Dropout层和一个用于存储其他层的列表。
+
+```python
+   for layer_id in range(self.n_layers):
+       self.layers.append(TransformerBlock(layer_id, params))
+```
+在每一层创建一个新的TransformerBlock实例，并将其添加到self.layers列表中。
+
 
 
 
