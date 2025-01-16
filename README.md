@@ -69,17 +69,26 @@ tokenizer.save("./model/minimind_tokenizer/tokenizer.json")
 “you”	2
 “and”	3
 “AI”	4
----
-嵌入层的初始化：
+```
 
+嵌入层的初始化：
+```python
 import torch
 import torch.nn as nn
 
 # 初始化嵌入层，词汇表大小为 5，嵌入向量维度为 3
 embedding_layer = nn.Embedding(num_embeddings=5, embedding_dim=3)
+这一行定义了一个嵌入层（embedding layer），用于将输入的词（token）从离散的词汇表索引（vocab_size）映射到一个连续的向量空间（dim）。
 
----
+params.vocab_size 是词汇表的大小（即有多少个不同的词）。
+params.dim 是嵌入向量的维度（每个词被表示为一个 dim 维的向量）。
+嵌入矩阵的形状是 (vocab_size, dim)，每一行表示一个词的嵌入向量。
+这一步的作用是将离散的词索引（如 [0, 1, 2]）映射为连续的嵌入向量（如 [[0.1, 0.2], [0.3, 0.4], [0.5, 0.6]]）。
+
+```
+
 假设我们有两个句子：
+```python
 
 句子 1: "I love AI" -> 索引序列 [0, 1, 4]
 句子 2: "you and AI" -> 索引序列 [2, 3, 4]
@@ -90,37 +99,43 @@ input_indices = torch.tensor([
     [2, 3, 4]   # 句子 2 的索引序列
 ])  # 形状: (batch_size=2, sequence_length=3)
 
---
-将输入张量传入嵌入层：
+```
 
+将输入张量传入嵌入层：
+```python
 output_embeddings = embedding_layer(input_indices)
 print(output_embeddings.shape)  # 输出形状: (2, 3, 3)
-
---
+```
 
 输出的形状为 (batch_size, sequence_length, embedding_dim)，即：
-
+```python
 batch_size=2：表示有 2 个句子。
 sequence_length=3：每个句子有 3 个单词。
 embedding_dim=3：每个单词的嵌入向量是 3 维的。
+```
 
 对于句子 1 [0, 1, 4]：
+```python
 索引 0 对应嵌入向量 [0.1, 0.2, 0.3]（“I” 的嵌入向量）。
 索引 1 对应嵌入向量 [-0.1, 0.0, 0.5]（“love” 的嵌入向量）。
 索引 4 对应嵌入向量 [-0.6, 0.7, 0.2]（“AI” 的嵌入向量）。 输出为：
 [[ 0.1,  0.2,  0.3],
  [-0.1,  0.0,  0.5],
  [-0.6,  0.7,  0.2]]
+```
 
 对于句子 2 [2, 3, 4]：
+```python
 索引 2 对应嵌入向量 [0.4, -0.2, 0.1]（“you” 的嵌入向量）。
 索引 3 对应嵌入向量 [0.3, 0.8, -0.5]（“and” 的嵌入向量）。
 索引 4 对应嵌入向量 [-0.6, 0.7, 0.2]（“AI” 的嵌入向量）。 输出为：
 [[ 0.4, -0.2,  0.1],
  [ 0.3,  0.8, -0.5],
  [-0.6,  0.7,  0.2]]
+```
 
 最终的输出张量为：
+```python
 
 [
     [[ 0.1,  0.2,  0.3],  # 句子 1 的第一个单词 "I"
@@ -131,22 +146,24 @@ embedding_dim=3：每个单词的嵌入向量是 3 维的。
      [ 0.3,  0.8, -0.5],  # 句子 2 的第二个单词 "and"
      [-0.6,  0.7,  0.2]]  # 句子 2 的第三个单词 "AI"
 ]
----
+```
+
 nn.Embedding 的嵌入矩阵是一个可训练的参数，存储在 embedding_layer.weight 中。你可以通过以下方式查看嵌入矩阵的初始值：
+```python
 print(embedding_layer.weight)
----
+结果：
+
 tensor([[ 0.1234, -0.5678,  0.9101],
         [-0.2345,  0.6789, -0.1011],
         [ 0.3456, -0.7890,  0.1213],
         [-0.4567,  0.8901, -0.1415],
         [ 0.5678, -0.9012,  0.1617]], requires_grad=True)
----
+```
+
 嵌入矩阵的初始化发生在 创建 nn.Embedding 对象时，也就是执行 embedding_layer = nn.Embedding(...) 的那一刻。
 
 如果你没有手动修改嵌入矩阵的值，那么它会一直保持默认的随机初始化值，直到训练过程中被更新（通过反向传播）。
 
----
-
 嵌入矩阵是一个可训练的参数（requires_grad=True），在训练过程中会通过反向传播自动更新。每次梯度更新时，嵌入矩阵的值都会被调整，以更好地表示输入数据的语义关系。
 
-```
+
