@@ -167,13 +167,17 @@ tensor([[ 0.1234, -0.5678,  0.9101],
 嵌入矩阵是一个可训练的参数（requires_grad=True），在训练过程中会通过反向传播自动更新。每次梯度更新时，嵌入矩阵的值都会被调整，以更好地表示输入数据的语义关系。
 
 - dropout
+
   nn.Dropout是PyTorch中的一个层，用于在训练过程中随机将一部分神经元的输出设为零，以防止过拟合;
+
   params.dropout是一个参数，指定了在训练过程中每个神经元被“丢弃”的概率。这个值通常在0到1之间。
 
 ```python
   self.dropout = nn.Dropout(params.dropout)
 ```
+
 - layers
+
 torch.nn.ModuleList是一个特殊的容器，用于存储一系列的子模块（例如，神经网络层）。
 
 使用ModuleList可以方便地管理和迭代多个层或模块，特别是在需要动态添加或修改网络结构时。
@@ -183,6 +187,8 @@ torch.nn.ModuleList是一个特殊的容器，用于存储一系列的子模块�
   ```
 
 ```python
+  self.dropout = nn.Dropout(params.dropout)
+  self.layers = torch.nn.ModuleList()
 ```
 这两行代码是在定义一个神经网络的部分结构，其中包括一个Dropout层和一个用于存储其他层的列表。
 
